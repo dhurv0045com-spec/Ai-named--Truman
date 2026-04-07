@@ -1,0 +1,246 @@
+.cosmos-panel {
+  min-height: calc(100vh - 108px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── PILLS ── */
+.cosmos-pills-row {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--b1);
+  flex-shrink: 0;
+}
+
+.cosmos-pills-row::-webkit-scrollbar { display: none; }
+
+.cosmos-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58em;
+  letter-spacing: 1.5px;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--b1);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cosmos-pill:hover { color: var(--tx); border-color: var(--tx); }
+.cosmos-pill--active { font-weight: 500; }
+
+/* ── BODY ── */
+.cosmos-body {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  flex: 1;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .cosmos-body {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
+/* ── INFO ── */
+.cosmos-info {
+  padding: 20px;
+  border-right: 1px solid var(--b1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cosmos-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.2em;
+  color: var(--hi);
+}
+
+.cosmos-accent-bar {
+  height: 3px;
+  width: 40px;
+  border-radius: 2px;
+}
+
+.cosmos-summary {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88em;
+  color: var(--tx);
+  line-height: 1.8;
+}
+
+.cosmos-fact {
+  padding: 10px 14px;
+  background: var(--s1);
+  border-left: 2px solid;
+  border-radius: 0 6px 6px 0;
+  font-size: 0.83em;
+  color: var(--tx);
+  line-height: 1.6;
+}
+
+.cosmos-missions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cosmos-mission-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58em;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--b1);
+  color: var(--dim);
+}
+
+.cosmos-next {
+  border: 1px solid var(--b1);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 0.83em;
+  color: var(--tx);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cosmos-next-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7em;
+  color: var(--dim);
+  letter-spacing: 1.5px;
+}
+
+/* ── CONVO ── */
+.cosmos-convo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.cosmos-messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cosmos-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px 0;
+}
+
+.cosmos-suggest-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6em;
+  letter-spacing: 0.5px;
+  padding: 10px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--b1);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s;
+}
+
+.cosmos-suggest-pill:hover {
+  color: var(--tx);
+  border-color: var(--tx);
+  background: var(--s1);
+}
+
+.cosmos-msg {
+  max-width: 100%;
+  animation: fadeUp 0.2s ease;
+}
+
+.cosmos-msg--user {
+  align-self: flex-end;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-radius: 12px 12px 2px 12px;
+  padding: 10px 14px;
+  max-width: 80%;
+  color: var(--hi);
+  font-size: 0.9em;
+}
+
+.cosmos-msg--assistant {
+  align-self: flex-start;
+  width: 100%;
+  background: var(--s1);
+  border: 1px solid var(--b1);
+  border-radius: 2px 12px 12px 12px;
+  padding: 14px 16px;
+}
+
+.cosmos-thinking {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72em;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.cosmos-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+  padding: 12px 20px;
+  border-top: 1px solid var(--b1);
+  background: rgba(2, 3, 8, 0.95);
+  flex-shrink: 0;
+}
+
+.cosmos-textarea {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--b1);
+  border-radius: 10px;
+  color: var(--hi);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.88em;
+  padding: 10px 14px;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s;
+  line-height: 1.6;
+}
+
+.cosmos-textarea::placeholder { color: var(--dim); }
+.cosmos-textarea:focus { border-color: rgba(0, 229, 255, 0.3); }
+
+.cosmos-ask-btn {
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65em;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.cosmos-ask-btn:hover:not(:disabled) { opacity: 0.85; }
+.cosmos-ask-btn:disabled { opacity: 0.4; cursor: not-allowed; }

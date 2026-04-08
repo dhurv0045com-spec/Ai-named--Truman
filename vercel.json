@@ -1,6 +1,12 @@
 {
+  "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/api-server run build",
-  "outputDirectory": "artifacts/api-server/dist",
-  "framework": null
+  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build && rm -rf dist && cp -r artifacts/mockup-sandbox/dist dist",
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

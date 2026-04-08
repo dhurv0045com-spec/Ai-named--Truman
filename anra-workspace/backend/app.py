@@ -8,12 +8,13 @@ from routes.build import router as build_router
 from routes.lab import router as lab_router
 from routes.cosmos import router as cosmos_router
 from routes.insights import router as insights_router
+from config import CORS_ALLOW_ORIGINS
 
 app = FastAPI(title="AN-RA Workspace API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=CORS_ALLOW_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,6 +1,12 @@
 {
-  "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/api-server run build",
-  "outputDirectory": "artifacts/api-server/dist",
-  "framework": null
+  "framework": "vite",
+  "installCommand": "pnpm run vercel:install",
+  "buildCommand": "pnpm run vercel:build",
+  "outputDirectory": "artifacts/mockup-sandbox/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

@@ -8,5 +8,8 @@ DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./anra.db")
 DEFAULT_MODEL = os.getenv("DEFAULT_MODEL", "anthropic/claude-3.5-haiku")
 DEBUG = os.getenv("DEBUG", "false").lower() == "true"
 
+cors_origins_raw = os.getenv("CORS_ALLOW_ORIGINS", "http://localhost:5173")
+CORS_ALLOW_ORIGINS = [origin.strip() for origin in cors_origins_raw.split(",") if origin.strip()]
+
 if not OR_API_KEY:
     print("WARNING: OR_KEY not set in .env file")

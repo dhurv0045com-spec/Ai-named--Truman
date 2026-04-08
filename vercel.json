@@ -1,0 +1,6 @@
+{
+  "buildCommand": "cd anra-workspace/frontend && npm install && npm run build",
+  "outputDirectory": "anra-workspace/frontend/dist",
+  "installCommand": "echo 'skip'",
+  "framework": null
+}

@@ -1,7 +1,12 @@
 {
   "framework": "vite",
+<<<<<<< codex/fix-deployment-failure-and-bugs-6chidr
   "installCommand": "pnpm run vercel:install",
   "buildCommand": "pnpm run vercel:build",
+=======
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build",
+>>>>>>> main
   "outputDirectory": "artifacts/mockup-sandbox/dist",
   "rewrites": [
     {

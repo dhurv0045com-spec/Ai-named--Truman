@@ -3,8 +3,8 @@
   "version": 2,
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build",
-  "outputDirectory": "artifacts/mockup-sandbox/dist",
+  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build && rm -rf dist && cp -R artifacts/mockup-sandbox/dist dist",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",

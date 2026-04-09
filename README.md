@@ -32,15 +32,25 @@ This repository uses **split hosting**:
 - Health endpoint: `/api/healthz`
 
 ### Frontend → Vercel
-- App: `@workspace/mockup-sandbox`
-- Vercel build target: `artifacts/mockup-sandbox/package.json` (`@vercel/static-build`)
-- Dist directory produced by Vite: `artifacts/mockup-sandbox/dist`
+- App: `anra-workspace/frontend`
+- Vercel build target: `anra-workspace/frontend/package.json` (`@vercel/static-build`)
+- Dist directory produced by Vite: `anra-workspace/frontend/dist`
 - SPA rewrite to `/index.html`
 
 ### Why split deployment?
 - Better platform fit (API service vs static frontend)
 - Independent scaling/deployment
 - Clear separation of runtime concerns
+
+### Vercel Project Settings (Required)
+
+In the Vercel dashboard for this repo, use:
+
+- **Root Directory:** `.` (repo root)
+- **Do not set:** `.repo root` (this is not a real path and causes deployment failure)
+- Build behavior is defined in `vercel.json` and targets `anra-workspace/frontend/package.json`.
+
+If you see `The specified Root Directory ".repo root" does not exist`, update the project setting and redeploy.
 
 ---
 
@@ -104,17 +114,17 @@ pnpm install
 pnpm --filter @workspace/api-server dev
 ```
 
-### Run mockup frontend locally
+### Run ANRA frontend locally
 
 ```bash
-pnpm --filter @workspace/mockup-sandbox dev
+cd anra-workspace/frontend && npm run dev
 ```
 
 ### Build commands
 
 ```bash
 pnpm --filter @workspace/api-server build
-pnpm --filter @workspace/mockup-sandbox build
+cd anra-workspace/frontend && npm run build
 ```
 
 ---
@@ -122,7 +132,7 @@ pnpm --filter @workspace/mockup-sandbox build
 ## 6) Deployment Configuration Files
 
 - **Railway / Nixpacks:** `nixpacks.toml`
-- **Vercel:** `vercel.json` (static-build config targeting `artifacts/mockup-sandbox`)
+- **Vercel:** `vercel.json` (static-build config targeting `anra-workspace/frontend`)
 - **Railway service metadata:** `railway.json`
 
 If deployment fails, check these first along with package-level build scripts.

@@ -3,7 +3,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "artifacts/mockup-sandbox/package.json",
+      "src": "anra-workspace/frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "dist"

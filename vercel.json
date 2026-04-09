@@ -1,12 +1,22 @@
 {
-  "framework": "vite",
-  "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build && rm -rf dist && cp -R artifacts/mockup-sandbox/dist dist",
-  "outputDirectory": "dist",
-  "rewrites": [
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "artifacts/mockup-sandbox/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }

@@ -33,8 +33,8 @@ This repository uses **split hosting**:
 
 ### Frontend → Vercel
 - App: `@workspace/mockup-sandbox`
-- Build command: `pnpm --filter @workspace/mockup-sandbox build`
-- Output artifact: `dist` (Vite static build)
+- Vercel build target: `artifacts/mockup-sandbox/package.json` (`@vercel/static-build`)
+- Dist directory produced by Vite: `artifacts/mockup-sandbox/dist`
 - SPA rewrite to `/index.html`
 
 ### Why split deployment?
@@ -122,7 +122,7 @@ pnpm --filter @workspace/mockup-sandbox build
 ## 6) Deployment Configuration Files
 
 - **Railway / Nixpacks:** `nixpacks.toml`
-- **Vercel:** `vercel.json`
+- **Vercel:** `vercel.json` (static-build config targeting `artifacts/mockup-sandbox`)
 - **Railway service metadata:** `railway.json`
 
 If deployment fails, check these first along with package-level build scripts.

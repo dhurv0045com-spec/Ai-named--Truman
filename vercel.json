@@ -1,8 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
   "installCommand": "pnpm install --frozen-lockfile",
-  "buildCommand": "pnpm --filter @workspace/mockup-sandbox build",
-  "outputDirectory": "artifacts/mockup-sandbox/dist",
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/(.*)",

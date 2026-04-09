@@ -1,135 +1,196 @@
-# AN·RA — AI Workspace
+# AN·RA (Ai-named--Truman)
 
-AN·RA is a full-stack AI workspace built around an intelligent reasoning system. It provides a clean, dark-themed interface with multiple specialized panels for chat, code generation, scientific analysis, and knowledge storage.
+AN·RA is a split-deployment AI workspace with:
+- a **TypeScript API backend** deployed to **Railway**.
+- a **Vite + React frontend** deployed to **Vercel**.
+- an additional **legacy Python/React workspace** kept in the repo for iteration and reference.
 
----
-
-## Features
-
-- **Mind** — persistent AI chat with session history
-- **Build** — code generation across multiple modes (NumPy, PyTorch, FastAPI, algorithms, explain, general)
-- **Lab** — deep analysis, comparisons, future projections, and idea development
-- **Cosmos** — curated knowledge base for space, science, and frontier topics
-- **Vault** — save and revisit generated ideas and code snippets
-- **Home** — dashboard overview and quick access
+This README is focused on what the project does, how it is deployed today, and how to run it locally.
 
 ---
 
-## Stack
+## 1) Project Goal
 
-### Backend (`anra-workspace/backend`)
-- **Python** + **FastAPI**
-- **SQLAlchemy** + SQLite for chat history and vault storage
-- **OpenRouter** AI client with model fallback
-- Routes: `/health`, `/chat`, `/vault`, `/build`, `/lab`, `/cosmos`, `/insights`
+The goal of AN·RA is to provide a practical, developer-friendly AI workspace that combines:
+- conversational assistance,
+- code-oriented tooling,
+- idea exploration,
+- and structured knowledge workflows.
 
-### Frontend (`anra-workspace/frontend`)
-- **React** + **Vite**
-- **Zustand** for state management
-- Custom syntax-highlighted `CodeBlock` component
-- Panels: Home, Mind, Build, Lab, Cosmos, Vault
-
-### Monorepo (`/`)
-- **pnpm workspaces** monorepo
-- **TypeScript** 5.9
-- **Express 5** API server (`artifacts/api-server`)
-- **PostgreSQL** + **Drizzle ORM**
-- **Zod** validation + **Orval** codegen from OpenAPI spec
-- **esbuild** for production builds
+In short: **one interface where users can chat, build, analyze, and store useful outputs**.
 
 ---
 
-## Getting Started
+## 2) Current Deployment Strategy (Production)
 
-### Prerequisites
-- Node.js 18+
-- Python 3.10+
-- pnpm (`npm install -g pnpm`)
+This repository uses **split hosting**:
 
-### Backend
+### Backend → Railway
+- Service: `@workspace/api-server`
+- Build platform: Nixpacks (`nixpacks.toml`)
+- Runtime command: `pnpm --filter @workspace/api-server start` with production runtime env
+- Health endpoint: `/api/healthz`
 
-```bash
-cd anra-workspace/backend
-cp .env.example .env
-# Add your OpenRouter API key to .env:
-# OR_KEY=sk-or-v1-your-key-here
-pip install -r requirements.txt
-uvicorn app:app --reload --port 8000
-```
+### Frontend → Vercel
+- App: `anra-workspace/frontend`
+- Vercel build target: `anra-workspace/frontend/package.json` (`@vercel/static-build`)
+- Dist directory produced by Vite: `anra-workspace/frontend/dist`
+- SPA rewrite to `/index.html`
 
-API docs available at `http://localhost:8000/docs`
+### Why split deployment?
+- Better platform fit (API service vs static frontend)
+- Independent scaling/deployment
+- Clear separation of runtime concerns
 
-### Frontend
+### Vercel Project Settings (Required)
 
-```bash
-cd anra-workspace/frontend
-npm install
-npm run dev
-```
+In the Vercel dashboard for this repo, use:
 
-Open `http://localhost:5173`
+- **Root Directory:** `.` (repo root)
+- **Do not set:** `.repo root` (this is not a real path and causes deployment failure)
+- Build behavior is defined in `vercel.json` and targets `anra-workspace/frontend/package.json`.
+- If you override Build/Output in Vercel, use `Build Command: pnpm build` and `Output Directory: dist` (root `build` now publishes `anra-workspace/frontend/dist` to root `dist`).
 
-### Monorepo (TypeScript API Server)
-
-```bash
-pnpm install
-pnpm --filter @workspace/api-server run dev
-```
+If you see `The specified Root Directory ".repo root" does not exist`, update the project setting and redeploy.
 
 ---
 
-## Environment Variables
+## 3) Repository Layout
 
-Copy `anra-workspace/backend/.env.example` to `.env` and fill in:
-
-| Variable | Description |
-|---|---|
-| `OR_KEY` | OpenRouter API key — get one at [openrouter.ai](https://openrouter.ai) |
-| `DATABASE_URL` | SQLite path (default: `sqlite:///./anra.db`) |
-| `DEFAULT_MODEL` | AI model to use (default: `anthropic/claude-3.5-haiku`) |
-| `DEBUG` | Enable debug mode (`true` / `false`) |
-
----
-
-## Project Structure
-
-```
+```text
 .
-├── anra-workspace/
-│   ├── backend/
-│   │   ├── app.py               # FastAPI app entry point
-│   │   ├── config.py            # Environment config
-│   │   ├── requirements.txt
-│   │   ├── db/                  # SQLAlchemy models + CRUD
-│   │   ├── routes/              # health, chat, vault, build, lab, cosmos
-│   │   └── services/            # AI client, prompt builder
-│   └── frontend/
-│       └── src/
-│           ├── api.js           # All API calls (single source of truth)
-│           ├── store/           # Zustand stores per panel
-│           ├── components/      # Markdown renderer, CodeBlock
-│           └── panels/          # Home, Mind, Build, Lab, Cosmos, Vault
 ├── artifacts/
-│   └── api-server/              # TypeScript Express API server
+│   ├── api-server/            # Railway backend (TypeScript + Express)
+│   └── mockup-sandbox/        # Vercel frontend (React + Vite)
 ├── lib/
-│   ├── api-spec/                # OpenAPI spec + Orval codegen config
-│   ├── api-client-react/        # Generated React Query hooks
-│   ├── api-zod/                 # Generated Zod schemas
-│   └── db/                      # Drizzle ORM schema
+│   ├── api-spec/              # OpenAPI source
+│   ├── api-client-react/      # generated client hooks
+│   ├── api-zod/               # generated zod schemas
+│   └── db/                    # DB package (Drizzle)
+├── anra-workspace/
+│   ├── backend/               # legacy/parallel Python FastAPI backend
+│   └── frontend/              # legacy/parallel React frontend
+├── nixpacks.toml              # Railway/Nixpacks config
+├── vercel.json                # Vercel build + output config
 └── pnpm-workspace.yaml
 ```
 
 ---
 
-## Key Commands (Monorepo)
+## 4) Main Tech Stack
+
+### Production path (active split deployment)
+- Node.js 22
+- pnpm workspaces
+- TypeScript
+- Express (API)
+- React + Vite (frontend)
+
+### Shared/Support tooling
+- OpenAPI + Orval codegen
+- Zod schemas
+- Drizzle ORM (DB package)
+
+### Legacy/parallel app in repo
+- Python FastAPI backend
+- React frontend under `anra-workspace/`
+
+---
+
+## 5) Local Development
+
+## Prerequisites
+- Node.js 22+
+- pnpm 10+
+
+Install dependencies:
 
 ```bash
-pnpm run typecheck                           # Full TypeScript check
-pnpm run build                               # Typecheck + build all packages
-pnpm --filter @workspace/api-spec run codegen  # Regenerate API hooks + Zod schemas
-pnpm --filter @workspace/db run push         # Push DB schema changes (dev only)
-pnpm --filter @workspace/api-server run dev  # Run API server
+pnpm install
 ```
+
+### Run API server locally
+
+```bash
+pnpm --filter @workspace/api-server dev
+```
+
+### Run ANRA frontend locally
+
+```bash
+cd anra-workspace/frontend && npm run dev
+```
+
+### Build commands
+
+```bash
+pnpm --filter @workspace/api-server build
+cd anra-workspace/frontend && npm run build
+```
+
+---
+
+## 6) Deployment Configuration Files
+
+- **Railway / Nixpacks:** `nixpacks.toml`
+- **Vercel:** `vercel.json` (static-build config targeting `anra-workspace/frontend`)
+- **Railway service metadata:** `railway.json`
+
+If deployment fails, check these first along with package-level build scripts.
+
+---
+
+## 7) API and Frontend Responsibilities
+
+### API (`artifacts/api-server`)
+- Handles server runtime and HTTP endpoints
+- Exposes health route for platform checks
+- Built with TypeScript build pipeline (`tsc -b`)
+
+### Frontend (`artifacts/mockup-sandbox`)
+- Provides UI for workspace interactions
+- Built as static assets via Vite
+- Served by Vercel as SPA
+
+---
+
+## 8) Project Size (quick snapshot)
+
+The following snapshot was measured from tracked files in this repository:
+
+- **Tracked files:** 176
+- **Total tracked lines (all file types):** ~26,549 (`git ls-files | xargs wc -l`)
+- **Approx code lines (selected code extensions):** ~11,506
+
+Approx code lines by major area:
+- `artifacts/mockup-sandbox`: ~6,533
+- `anra-workspace/frontend`: ~3,416
+- `anra-workspace/backend`: ~695
+- `lib/*`: ~646
+- `artifacts/api-server`: ~215
+
+> Note: values are moving targets and will change as the project evolves.
+
+---
+
+## 9) Typical Contributor Workflow
+
+1. Create a branch.
+2. Run scoped builds for changed packages.
+3. Update deployment config when build/output paths change.
+4. Open PR with:
+   - motivation,
+   - exact file changes,
+   - validation commands and results.
+
+---
+
+## 10) Roadmap Direction (high level)
+
+- Stabilize split deployment pipeline (Railway + Vercel)
+- Improve frontend UX and feature depth in the workspace
+- Expand API surface with documented contracts
+- Consolidate legacy and active app paths over time
 
 ---
 

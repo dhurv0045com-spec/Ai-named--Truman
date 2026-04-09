@@ -1,7 +1,7 @@
 // ALL backend calls go through this file only.
 // Never call fetch() from any component directly.
 
-const BASE = '/api'
+const BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
 
 const post = async (url, body) => {
   const res = await fetch(`${BASE}${url}`, {

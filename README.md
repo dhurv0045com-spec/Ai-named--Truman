@@ -33,8 +33,8 @@ This repository uses **split hosting**:
 
 ### Frontend → Vercel
 - App: `anra-workspace/frontend`
-- Vercel build target: `anra-workspace/frontend/package.json` (`@vercel/static-build`)
-- Dist directory produced by Vite: `anra-workspace/frontend/dist`
+- Vercel build command: `pnpm build` (root script)
+- Output directory served by Vercel: `dist`
 - SPA rewrite to `/index.html`
 
 ### Why split deployment?
@@ -48,11 +48,10 @@ In the Vercel dashboard for this repo, use:
 
 - **Root Directory:** `.` (repo root)
 - **Do not set:** `.repo root` (this is not a real path and causes deployment failure)
-- Build behavior is defined in `vercel.json` and targets `anra-workspace/frontend/package.json`.
-<<<<<<< codex/fix-high-priority-bug-in-nixpacks.toml-96kxoo
+- Build behavior is defined in `vercel.json` (`framework: vite`, `buildCommand: pnpm build`, `outputDirectory: dist`).
+- If you override Build/Output in Vercel, use the same values: `Build Command: pnpm build`, `Output Directory: dist`.
 - If you override Build/Output in Vercel, use `Build Command: pnpm build` and `Output Directory: dist` (root `build` now publishes `anra-workspace/frontend/dist` to root `dist`).
-=======
->>>>>>> codex/fix-deployment-failure-and-bugs-lgrfv6
+ codex/fix-deployment-failure-and-bugs-lgrfv6
 
 If you see `The specified Root Directory ".repo root" does not exist`, update the project setting and redeploy.
 
@@ -136,7 +135,7 @@ cd anra-workspace/frontend && npm run build
 ## 6) Deployment Configuration Files
 
 - **Railway / Nixpacks:** `nixpacks.toml`
-- **Vercel:** `vercel.json` (static-build config targeting `anra-workspace/frontend`)
+- **Vercel:** `vercel.json` (Vite framework + root `dist` output)
 - **Railway service metadata:** `railway.json`
 
 If deployment fails, check these first along with package-level build scripts.

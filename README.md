@@ -50,8 +50,7 @@ In the Vercel dashboard for this repo, use:
 - **Do not set:** `.repo root` (this is not a real path and causes deployment failure)
 - Build behavior is defined in `vercel.json` (`framework: vite`, `buildCommand: pnpm build`, `outputDirectory: dist`).
 - If you override Build/Output in Vercel, use the same values: `Build Command: pnpm build`, `Output Directory: dist`.
-- If you override Build/Output in Vercel, use `Build Command: pnpm build` and `Output Directory: dist` (root `build` now publishes `anra-workspace/frontend/dist` to root `dist`).
- codex/fix-deployment-failure-and-bugs-lgrfv6
+- **Framework Preset must not be `Express`** for this frontend deployment; use Vite/auto-detect (or no override) so static `dist` is served correctly.
 
 If you see `The specified Root Directory ".repo root" does not exist`, update the project setting and redeploy.
 

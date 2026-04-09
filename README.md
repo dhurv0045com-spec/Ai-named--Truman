@@ -50,6 +50,8 @@ In the Vercel dashboard for this repo, use:
 - **Do not set:** `.repo root` (this is not a real path and causes deployment failure)
 - Build behavior is defined in `vercel.json` and targets `anra-workspace/frontend/package.json`.
 - If you override Build/Output in Vercel, use `Build Command: pnpm build` and `Output Directory: dist` (root `build` now uses a reproducible frontend install (`npm ci`) and publishes `anra-workspace/frontend/dist` to root `dist`).
+- If you override Build/Output in Vercel, use `Build Command: pnpm build` and `Output Directory: dist` (root `build` now publishes `anra-workspace/frontend/dist` to root `dist`).
+ main
 
 If you see `The specified Root Directory ".repo root" does not exist`, update the project setting and redeploy.
 

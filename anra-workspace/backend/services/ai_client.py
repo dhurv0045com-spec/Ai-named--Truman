@@ -1,15 +1,40 @@
 import httpx
 from fastapi import HTTPException
-from config import OR_API_KEY, DEFAULT_MODEL
+from config import (
+    OR_API_KEY,
+    DEEPSEEK_API_KEY,
+    DEFAULT_MODEL,
+    AI_PROVIDER,
+)
 
-OR_URL = "https://openrouter.ai/api/v1/chat/completions"
+OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
+DEEPSEEK_URL = "https://api.deepseek.com/v1/chat/completions"
 
-HEADERS = {
-    "Authorization": f"Bearer {OR_API_KEY}",
-    "Content-Type": "application/json",
-    "HTTP-Referer": "https://anra.build",
-    "X-Title": "AN-RA Workspace"
-}
+
+def _provider_config() -> tuple[str, dict[str, str]]:
+    if AI_PROVIDER == "deepseek":
+        if not DEEPSEEK_API_KEY:
+            raise HTTPException(status_code=500, detail="Missing DEEPSEEK_API_KEY")
+        return (
+            DEEPSEEK_URL,
+            {
+                "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
+                "Content-Type": "application/json",
+            },
+        )
+
+    if not OR_API_KEY:
+        raise HTTPException(status_code=500, detail="Missing OR_KEY")
+
+    return (
+        OPENROUTER_URL,
+        {
+            "Authorization": f"Bearer {OR_API_KEY}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://anra.build",
+            "X-Title": "AN-RA Workspace",
+        },
+    )
 
 
 async def call_ai(
@@ -26,9 +51,10 @@ async def call_ai(
         "temperature": temperature,
         "messages": full_messages
     }
+    url, headers = _provider_config()
     try:
         async with httpx.AsyncClient(timeout=60) as client:
-            response = await client.post(OR_URL, headers=HEADERS, json=payload)
+            response = await client.post(url, headers=headers, json=payload)
             response.raise_for_status()
             return response.json()["choices"][0]["message"]["content"]
     except httpx.HTTPStatusError as e:
@@ -36,6 +62,8 @@ async def call_ai(
             status_code=502,
             detail=f"AI service error: {e.response.status_code}"
         )
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(
             status_code=500,
@@ -59,7 +87,7 @@ async def call_ai_with_fallback(
         )
         return {"reply": content, "model_used": primary_model}
     except HTTPException as e:
-        if e.status_code == 502:
+        if e.status_code == 502 and AI_PROVIDER == "openrouter":
             try:
                 content = await call_ai(
                     messages=messages,

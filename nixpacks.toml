@@ -1,11 +1,11 @@
 [phases.setup]
-nixPkgs = ["nodejs_22", "pnpm"]
+nixPkgs = ["python311", "pip"]
 
 [phases.install]
-cmds = ["pnpm install --no-frozen-lockfile"]
+cmds = ["cd anra-workspace/backend && pip install -r requirements.txt"]
 
 [phases.build]
-cmds = ["pnpm --filter @workspace/api-server build"]
+cmds = ["echo 'No build step needed for Python backend'"]
 
 [start]
-cmd = "NODE_ENV=production pnpm --filter @workspace/api-server start"
+cmd = "cd anra-workspace/backend && uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"

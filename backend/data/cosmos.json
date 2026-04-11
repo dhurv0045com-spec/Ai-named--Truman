@@ -1,0 +1,88 @@
+{
+  "sections": {
+    "india": {
+      "title": "India Space Program",
+      "accent": "#ff5e1a",
+      "summary": "ISRO journey from humble beginnings to landing on the Moons south pole",
+      "facts": [
+        "Chandrayaan-3 landed near lunar south pole August 2023 — a world first",
+        "Mangalyaan reached Mars on first attempt 2014, cost less than the film Gravity",
+        "Gaganyaan will make India 4th nation to send humans to space",
+        "ISRO operates on budget 10x smaller than NASA per mission",
+        "NAVIC satellite navigation covers entire Asian region"
+      ],
+      "missions": ["Chandrayaan-3","Mangalyaan","Aditya-L1","Gaganyaan"],
+      "next": "Chandrayaan-4 sample return 2027"
+    },
+    "mars": {
+      "title": "Mars Colonisation",
+      "accent": "#ff3860",
+      "summary": "The path to making humanity multiplanetary",
+      "facts": [
+        "Mars day is 24 hours 37 minutes",
+        "Starship designed to carry 100 people per flight",
+        "Mars has enough CO2 to terraform over centuries",
+        "Journey takes 6-9 months depending on alignment",
+        "Olympus Mons is 22km high largest volcano in solar system"
+      ],
+      "missions": ["Perseverance","Ingenuity","Starship","Mars Base Alpha"],
+      "next": "First crewed Mars mission early 2030s"
+    },
+    "sun": {
+      "title": "Solar Science",
+      "accent": "#ffc93c",
+      "summary": "Understanding the star that powers all life",
+      "facts": [
+        "Sun contains 99.86 percent of all solar system mass",
+        "Solar wind travels 400-800 km per second",
+        "Solar flare releases energy of billions of bombs",
+        "Core temperature is 15 million degrees Celsius",
+        "Aditya-L1 is India first solar observatory at L1"
+      ],
+      "missions": ["Parker Solar Probe","Solar Orbiter","Aditya-L1"],
+      "next": "Parker Solar Probe touches corona 2025"
+    },
+    "raptor": {
+      "title": "Raptor Engine",
+      "accent": "#b040ff",
+      "summary": "The most powerful rocket engine ever built",
+      "facts": [
+        "Raptor 3 produces 280 tonnes of thrust",
+        "Burns liquid methane and liquid oxygen",
+        "Full-flow staged combustion near perfect efficiency",
+        "33 Raptors power Starship Super Heavy booster",
+        "SpaceX caught booster with mechazilla October 2024"
+      ],
+      "missions": ["Starship","Super Heavy"],
+      "next": "Raptor 3 powers first orbital Starship missions"
+    },
+    "universe": {
+      "title": "Universe and Cosmology",
+      "accent": "#00e5ff",
+      "summary": "The scale age and structure of everything",
+      "facts": [
+        "Observable universe is 93 billion light-years wide",
+        "More stars than grains of sand on all Earth beaches",
+        "Universe is 13.8 billion years old",
+        "Dark matter makes up 27 percent of universe",
+        "JWST sees galaxies from 300 million years after Big Bang"
+      ],
+      "missions": ["James Webb","Hubble","Euclid"],
+      "next": "Euclid mapping dark matter across 10 billion light-years"
+    },
+    "ai": {
+      "title": "AI and Intelligence",
+      "accent": "#00ff9f",
+      "summary": "Evolution of machine intelligence and what comes next",
+      "facts": [
+        "Transformers invented 2017 all LLMs descend from it",
+        "AlphaFold solved 50-year protein folding problem 2020",
+        "Human brain has 86 billion neurons",
+        "GPT-4 uses mixture-of-experts architecture",
+        "TRUMAN bridges symbolic reasoning with neural models"
+      ],
+      "models": ["GPT-4o","Claude 3","Gemini","Llama 3","TRUMAN"],
+      "next": "Reasoning models solving novel math theorems"
+    }
+  }
+}

@@ -10,7 +10,7 @@ from config import DEFAULT_MODEL
 
 router = APIRouter()
 
-VALID_MODES = ["analyze", "compare", "future", "build", "free"]
+VALID_MODES = ["analyze", "compare", "future", "build", "invert", "free"]
 
 
 class LabRequest(BaseModel):

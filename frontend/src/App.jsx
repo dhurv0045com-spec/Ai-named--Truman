@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import useAppStore from './store/appStore'
+import useChatStore from './store/chatStore'
+import useLabStore from './store/labStore'
+import useBuildStore from './store/buildStore'
+import useCosmosStore from './store/cosmosStore'
 import { ToastProvider } from './components/Toast'
 import BottomNav from './components/BottomNav'
+import Starfield from './components/Starfield'
+import QuickCapture from './components/QuickCapture'
+import ProactiveInsight from './components/ProactiveInsight'
 import MindPanel from './panels/MindPanel'
 import BuildPanel from './panels/BuildPanel'
 import HomePanel from './panels/HomePanel'
@@ -27,6 +34,13 @@ export default function App() {
   const sessionId    = useAppStore((s) => s.sessionId)
   const setSessionId = useAppStore((s) => s.setSessionId)
 
+  // Global busy state — any panel thinking = BUSY
+  const chatBusy   = useChatStore((s) => s.busy)
+  const labBusy    = useLabStore((s) => s.busy)
+  const buildBusy  = useBuildStore((s) => s.busy)
+  const cosmosBusy = useCosmosStore((s) => s.busy)
+  const globalBusy = chatBusy || labBusy || buildBusy || cosmosBusy
+
   const [backendOk, setBackendOk] = useState(false)
 
   useEffect(() => {
@@ -40,9 +54,17 @@ export default function App() {
     }
   }, [])
 
+  // Determine status label + color
+  const statusLabel = !backendOk ? 'OFFLINE' : globalBusy ? 'BUSY' : 'READY'
+  const statusColor = !backendOk ? 'var(--red)' : globalBusy ? 'var(--cyan)' : 'var(--green)'
+  const statusClass = globalBusy ? 'status-dot status-dot--busy' : 'status-dot'
+
   return (
     <ToastProvider>
-      {/* Ambient breathing background */}
+      {/* Animated starfield */}
+      <Starfield />
+
+      {/* Ambient gradient layer on top of stars */}
       <div className="ambient-bg" />
 
       <div className="app-shell">
@@ -51,16 +73,12 @@ export default function App() {
             AN·<span>RA</span>
           </div>
           <div className="top-bar__right">
-            <span className="status-label">
-              {backendOk ? 'ONLINE' : 'OFFLINE'}
-            </span>
+            <span className="status-label">{statusLabel}</span>
             <div
-              className="status-dot"
+              className={statusClass}
               style={{
-                background: backendOk ? 'var(--green)' : 'var(--red)',
-                boxShadow: backendOk
-                  ? '0 0 8px var(--green)'
-                  : '0 0 8px var(--red)',
+                background: statusColor,
+                boxShadow: `0 0 8px ${statusColor}`,
               }}
             />
           </div>
@@ -71,6 +89,12 @@ export default function App() {
         </main>
 
         <BottomNav />
+
+        {/* FAB + Quick Capture */}
+        <QuickCapture />
+
+        {/* Proactive insight system */}
+        <ProactiveInsight />
       </div>
     </ToastProvider>
   )

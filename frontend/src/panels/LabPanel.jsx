@@ -9,6 +9,7 @@ const MODES = [
   { id: 'compare', label: 'COMPARE', color: 'var(--gold)',   desc: 'Structured comparison + verdict' },
   { id: 'future',  label: 'FUTURE',  color: 'var(--plasma)', desc: 'Project 5, 10, 25 years forward' },
   { id: 'build',   label: 'BUILD',   color: 'var(--green)',  desc: 'Idea to concrete phased plan' },
+  { id: 'invert',  label: 'INVERT',  color: 'var(--ember)',  desc: 'Flip it — what does the opposite reveal?' },
   { id: 'free',    label: 'FREE',    color: 'var(--hi)',     desc: 'Open-ended deep analysis' },
 ]
 

@@ -99,6 +99,11 @@ def build_lab_prompt(mode: str = "analyze") -> str:
             "Turn this idea into a concrete phased plan. "
             "State the single first action to take today."
         ),
+        "invert": (
+            "Implement the exact opposite of this idea. "
+            "Find what happens when you invert it completely, what it reveals "
+            "about the original idea, and end by synthesizing both into a new, superior concept."
+        ),
         "free": ""
     }
 

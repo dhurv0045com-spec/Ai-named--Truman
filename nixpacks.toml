@@ -2,10 +2,13 @@
 nixPkgs = ["python311"]
 
 [phases.install]
-cmds = ["cd backend && pip install -r requirements.txt"]
+cmds = [
+    "python -m venv /app/venv",
+    "/app/venv/bin/pip install -r backend/requirements.txt"
+]
 
 [phases.build]
 cmds = ["echo 'No build step needed for Python backend'"]
 
 [start]
-cmd = "cd backend && uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"
+cmd = "cd backend && /app/venv/bin/uvicorn app:app --host 0.0.0.0 --port ${PORT:-8000}"

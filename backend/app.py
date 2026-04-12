@@ -9,7 +9,7 @@ from routes.build import router as build_router
 from routes.lab import router as lab_router
 from routes.cosmos import router as cosmos_router
 from routes.insights import router as insights_router
-from config import CORS_ALLOW_ORIGINS
+from config import DEFAULT_MODEL  # noqa: keep config imported for startup logging
 
 
 @asynccontextmanager

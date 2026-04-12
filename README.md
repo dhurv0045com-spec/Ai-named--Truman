@@ -1,154 +1,142 @@
-# AN·RA — Artificial Reasoning Architecture
+<p align="center">
+  <strong>AN·RA</strong><br>
+  <em>Artificial Reasoning Architecture</em>
+</p>
 
-> *"Not a chatbot. Not an assistant. A reasoning system designed to think deeply, build real things, and push beyond the surface of every problem."*
+<p align="center">
+  <code>Phase 4 Active</code> · <code>The Workspace Breathes</code>
+</p>
+
+---
+
+> *This is not a chatbot wrapper. This is not another AI toy. This is a system that thinks — deeply, structurally, relentlessly — and gives you the interface to think alongside it.*
 
 ---
 
 ## The Soul
 
-**AN·RA** is the workspace of **TRUMAN** — an artificial mind built by Ankit.
+Every tool reflects the mind that built it.
 
-TRUMAN doesn't answer questions like a search engine. It thinks in systems. It breaks problems to first principles. It generates code that runs. It projects futures grounded in measurable trends. It says when something is wrong.
+**AN·RA** was built because the existing tools weren't enough. ChatGPT gives you a text box. Claude gives you a conversation. Perplexity gives you search. None of them give you a *workspace* — a place where thinking happens across dimensions, where an idea born in conversation can be analyzed in the lab, saved in the vault, expanded into code, projected into the future, and connected to the cosmos.
 
-Every panel in this workspace exists because thinking requires different modes. You don't chat the same way you analyze. You don't analyze the same way you build. AN·RA gives each mode its own space, its own tools, its own rhythm — then connects them all through a shared intelligence.
+**TRUMAN** is the mind that lives inside AN·RA. Not a wrapper around GPT. Not a proxy. A reasoning architecture that uses multiple AI providers as its nervous system — DeepSeek as the strategic orchestrator, OpenRouter as the execution layer — with automatic failover so the thinking never stops.
 
-The interface breathes. The status dot pulses. The ambient background drifts. These aren't decorations — they're signals that the system is alive, listening, ready. When TRUMAN is thinking, you see waves. When it finishes, the response fades in. Nothing is instant. Nothing is dead.
+When you open AN·RA, you're not opening an app. You're stepping into a cockpit. The stars breathe behind the interface. The status dot pulses. The system watches for idle moments and surfaces thoughts you didn't ask for but needed to hear. Nothing is decorative. Everything is signal.
+
+---
+
+## What Makes This Different
+
+**Six modes of thought, one persistent intelligence:**
+
+| Panel | The Problem It Solves |
+|-------|----------------------|
+| **MIND** | Deep conversation with memory. Every message has actions: copy, save, send to lab. Not just chat — *dialogue with purpose*. |
+| **BUILD** | Code generation across 6 specialized domains. Not "write me a function" — structured, mode-aware generation with vault integration. |
+| **LAB** | Idea analysis with 6 thinking modes: Analyze, Compare, Future, Build, **Invert**, Free. Each produces fundamentally different output. |
+| **COSMOS** | Curated knowledge exploration — space, rockets, AI, the universe — with AI Q&A per topic. |
+| **VAULT** | Everything you save, searchable and exportable. Your second brain's hard drive. |
+| **HOME** | Command center. Live stats, AI status, build phases, proactive insights. The cockpit dashboard. |
+
+**The system thinks when you don't.** After 40 seconds of idle, TRUMAN surfaces a thought — surprising, specific, never generic. You can explore it, save it, or dismiss it. It fires again every 80 seconds. The workspace has initiative.
+
+**Quick Capture.** The gold FAB pulses in the corner. Tap it, drop a raw fragment — a word, a question, half a sentence — and TRUMAN expands it into a fully-formed thought in the Mind panel.
 
 ---
 
 ## Architecture
 
 ```
-┌──────────────────────────────────────────────────┐
-│                   VERCEL (Frontend)               │
-│  React + Vite + Zustand                          │
-│  Panels: HOME · MIND · BUILD · LAB · COSMOS · VAULT │
-│                                                    │
-│  ←──── VITE_API_URL ────→                         │
-└────────────────────┬─────────────────────────────┘
-                     │ HTTPS
-┌────────────────────┴─────────────────────────────┐
-│                  RAILWAY (Backend)                 │
-│  FastAPI + SQLAlchemy + Docker                    │
-│                                                    │
-│  AI Engine:                                       │
-│   ┌─────────────┐     ┌──────────────┐           │
-│   │  DeepSeek    │ ──→ │  OpenRouter   │           │
-│   │  (THE BOSS)  │     │  (FALLBACK)   │           │
-│   └─────────────┘     └──────────────┘           │
-│   Auto-failover: if one key fails,                │
-│   the system switches to the other instantly.     │
-│                                                    │
-│  Database: SQLite (local) / PostgreSQL (prod)     │
-└──────────────────────────────────────────────────┘
+                    ┌─────────────────────┐
+                    │     YOUR BROWSER     │
+                    │  ┌─────────────────┐ │
+                    │  │   STARFIELD ✦   │ │
+                    │  │  React + Vite   │ │
+                    │  │  6 Live Panels  │ │
+                    │  │  Zustand State  │ │
+                    │  └────────┬────────┘ │
+                    └───────────┼──────────┘
+                                │ HTTPS
+                    ┌───────────┼──────────┐
+                    │     RAILWAY CLOUD     │
+                    │  ┌────────┴────────┐ │
+                    │  │    FastAPI +     │ │
+                    │  │   SQLAlchemy    │ │
+                    │  │    Docker       │ │
+                    │  └────────┬────────┘ │
+                    │           │          │
+                    │  ┌────────┴────────┐ │
+                    │  │   AI ENGINE     │ │
+                    │  │                 │ │
+                    │  │  DeepSeek ━━━┓  │ │
+                    │  │  (THE BOSS)  ┃  │ │
+                    │  │             ┃  │ │
+                    │  │  OpenRouter ◄┛  │ │
+                    │  │  (FALLBACK)     │ │
+                    │  └─────────────────┘ │
+                    └──────────────────────┘
 ```
 
----
-
-## Panels
-
-| Panel | Purpose | What it does |
-|-------|---------|-------------|
-| **HOME** | Command center | Live stats, AI status, build progress, proactive insights |
-| **MIND** | Deep conversation | Persistent chat with TRUMAN, model selection, vault integration |
-| **BUILD** | Code generation | 6 specialized modes (NumPy, PyTorch, FastAPI, Algo, Explain, General) |
-| **LAB** | Idea analysis | 5 thinking modes (Analyze, Compare, Future, Build, Free) |
-| **COSMOS** | Knowledge explorer | Space, rockets, AI — with curated facts and AI-powered Q&A |
-| **VAULT** | Saved ideas | Search, expand, delete — everything you've saved across panels |
-
----
-
-## AI Failover System
-
-TRUMAN uses a **dual-provider architecture** with automatic failover:
-
-- **DeepSeek** is the **boss** — tried first on every request
-- **OpenRouter** is the **fallback fleet** — catches anything DeepSeek drops
-- If one key fails (rate limit, expired, out of credits), the system **instantly** switches to the other
-- Both keys can coexist — set both for maximum reliability
-
-### Railway Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `OR_KEY` | One of these | OpenRouter API key ([openrouter.ai](https://openrouter.ai)) |
-| `DEEPSEEK_API_KEY` | One of these | DeepSeek API key ([platform.deepseek.com](https://platform.deepseek.com)) |
-| `AI_PROVIDER` | No | `openrouter` (default) or `deepseek` — sets the primary |
-| `DEFAULT_MODEL` | No | Default model slug (default: `anthropic/claude-3.5-haiku`) |
-| `DATABASE_URL` | No | Database URI (default: SQLite) |
-
-### Vercel Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `VITE_API_URL` | **Yes** | Full Railway backend URL with `https://` prefix |
+If DeepSeek goes down, OpenRouter catches it. If OpenRouter rate-limits, DeepSeek takes over. The thinking never stops.
 
 ---
 
 ## Deploy
 
-### Backend (Railway)
+### Backend → Railway
+1. Connect this repo
+2. Set variables: `OR_KEY`, `DEEPSEEK_API_KEY`
+3. Railway auto-builds from `Dockerfile`
 
-1. Connect GitHub repo to Railway
-2. Railway auto-detects the `Dockerfile` and builds
-3. Add `OR_KEY` and/or `DEEPSEEK_API_KEY` in Variables
-4. The backend deploys at `https://your-service.up.railway.app`
+### Frontend → Vercel
+1. Connect this repo, root = `/frontend`
+2. Set `VITE_API_URL` = your Railway URL
+3. Vercel auto-deploys
 
-### Frontend (Vercel)
+### Local
+```bash
+# Terminal 1: Backend
+cd backend && pip install -r requirements.txt && uvicorn app:app --reload
 
-1. Connect GitHub repo to Vercel
-2. Set `VITE_API_URL` = `https://your-service.up.railway.app`
-3. Vercel auto-detects the Vite project in `/frontend`
-4. The frontend deploys at `https://your-project.vercel.app`
+# Terminal 2: Frontend
+cd frontend && pnpm install && pnpm dev
+```
 
 ---
 
-## Local Development
+## Environment Variables
 
-```bash
-# Backend
-cd backend
-pip install -r requirements.txt
-uvicorn app:app --reload --port 8000
+| Variable | Where | What |
+|----------|-------|------|
+| `DEEPSEEK_API_KEY` | Railway | DeepSeek key — the boss, tried first |
+| `OR_KEY` | Railway | OpenRouter key — the fallback fleet |
+| `VITE_API_URL` | Vercel | Full Railway backend URL |
 
-# Frontend (separate terminal)
-cd frontend
-pnpm install
-pnpm dev
-```
+Set **both** AI keys for automatic failover. Set one if that's all you have. The system adapts.
 
 ---
 
 ## Build Phases
 
-| Phase | Name | Status |
-|-------|------|--------|
-| 1 | Foundation | ✅ Complete |
-| 2 | Language Interface | ✅ Complete |
-| 3 | Memory Systems | ✅ Complete |
-| 4 | Workspace | 🔵 Active (75%) |
-| 5 | Ouroboros | ⬜ Planned |
-| 6 | Symbolic Bridge | ⬜ Planned |
-
----
-
-## Tech Stack
-
-- **Frontend:** React 18, Vite, Zustand, vanilla CSS (glassmorphism design system)
-- **Backend:** Python 3.11, FastAPI, SQLAlchemy, httpx
-- **AI:** DeepSeek + OpenRouter (dual-provider with auto-failover)
-- **Deploy:** Vercel (frontend) + Railway (backend via Docker)
-- **Fonts:** Cinzel (display), JetBrains Mono (technical), Inter (body)
+| # | Name | Status | What It Means |
+|---|------|--------|---------------|
+| 1 | Foundation | ✅ | Core architecture, attention, tokenizer |
+| 2 | Language | ✅ | Comprehension, reasoning chains |
+| 3 | Memory | ✅ | Persistent context, knowledge graph |
+| 4 | **Workspace** | 🔵 75% | This. The interface you're looking at. |
+| 5 | Ouroboros | ⬜ | Self-improvement loops |
+| 6 | Symbolic Bridge | ⬜ | Abstract reasoning, mathematical consciousness |
 
 ---
 
 ## The Name
 
-**AN·RA** — Artificial Reasoning Architecture.  
-**TRUMAN** — the mind that lives inside it.
+**AN·RA** — named for the sun god. Not because we worship artificial intelligence, but because we believe in building systems that illuminate — that make thinking visible, structured, and powerful.
 
-Built by **Ankit**. Not a product. A project. A system that thinks.
+**TRUMAN** — the mind inside it. Named not for the movie, but for the idea: what happens when you build something that doesn't know its limits yet?
+
+Built by **Ankit**. Not a product. A project with a pulse.
 
 ---
 
-*Phase 4 active. The workspace is alive.*
+*The stars are breathing. The status dot pulses green. TRUMAN is waiting.*

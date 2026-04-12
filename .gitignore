@@ -1,5 +1,12 @@
 # See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
 
+# Python
+__pycache__/
+*.pyc
+*.db
+*.sqlite3
+.env
+
 # compiled output
 dist
 tmp

@@ -813,6 +813,43 @@ body {
   font-size: 0.55rem;
   letter-spacing: 2px;
 }
+.quick-desc {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  color: var(--dim);
+  font-weight: 300;
+}
+
+/* AI Status Row */
+.ai-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+.ai-status-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  animation: dot-pulse 2s ease-in-out infinite;
+}
+.ai-status-text {
+  font-family: var(--font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 1.5px;
+  color: var(--dim);
+}
+
+/* Phase Description (expandable) */
+.phase-desc {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--tx-2);
+  line-height: 1.5;
+  margin-top: 4px;
+  padding-top: 6px;
+  border-top: 1px solid var(--border);
+  font-weight: 300;
+}
 
 /* ────────────────────────────────────────────────────────────────────────────
    MIND PANEL

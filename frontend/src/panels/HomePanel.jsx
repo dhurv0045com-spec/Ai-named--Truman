@@ -1,21 +1,21 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { getStats, getInsight } from '../api'
+import { getStats, getInsight, healthCheck } from '../api'
 import useAppStore from '../store/appStore'
 
 const PHASES = [
-  { number: 1, title: 'Foundation',         status: 'complete', completion: 100, color: 'var(--green)' },
-  { number: 2, title: 'Language Interface', status: 'complete', completion: 100, color: 'var(--green)' },
-  { number: 3, title: 'Memory Systems',     status: 'complete', completion: 100, color: 'var(--green)' },
-  { number: 4, title: 'Workspace',          status: 'active',   completion: 65,  color: 'var(--cyan)'  },
-  { number: 5, title: 'Ouroboros',          status: 'planned',  completion: 0,   color: 'var(--dim)'   },
-  { number: 6, title: 'Symbolic Bridge',    status: 'planned',  completion: 0,   color: 'var(--dim)'   },
+  { number: 1, title: 'Foundation',         status: 'complete', completion: 100, color: 'var(--green)',  icon: '⬢', desc: 'Core architecture, attention heads, tokenizer pipeline' },
+  { number: 2, title: 'Language Interface',  status: 'complete', completion: 100, color: 'var(--green)',  icon: '◈', desc: 'Natural language comprehension, reasoning chains' },
+  { number: 3, title: 'Memory Systems',      status: 'complete', completion: 100, color: 'var(--green)',  icon: '⊡', desc: 'Persistent memory, context recall, knowledge graph' },
+  { number: 4, title: 'Workspace',           status: 'active',   completion: 75,  color: 'var(--cyan)',   icon: '⟐', desc: 'Live web dashboard, multi-panel AI environment' },
+  { number: 5, title: 'Ouroboros',            status: 'planned',  completion: 0,   color: 'var(--dim)',    icon: '◎', desc: 'Self-improvement loops, autonomous code generation' },
+  { number: 6, title: 'Symbolic Bridge',      status: 'planned',  completion: 0,   color: 'var(--dim)',    icon: '⊛', desc: 'Abstract reasoning, mathematical consciousness' },
 ]
 
 const QUICK = [
-  { id: 'mind',   icon: '◈', label: 'MIND',   color: 'var(--cyan)'   },
-  { id: 'build',  icon: '⟨/⟩', label: 'BUILD', color: 'var(--plasma)' },
-  { id: 'lab',    icon: '⬡', label: 'LAB',    color: 'var(--green)'  },
-  { id: 'cosmos', icon: '✦', label: 'COSMOS', color: 'var(--ember)'  },
+  { id: 'mind',   icon: '◈', label: 'MIND',   color: 'var(--cyan)',   desc: 'Chat with TRUMAN' },
+  { id: 'build',  icon: '⟨/⟩', label: 'BUILD', color: 'var(--plasma)', desc: 'Generate code' },
+  { id: 'lab',    icon: '⬡', label: 'LAB',    color: 'var(--green)',  desc: 'Analyze ideas' },
+  { id: 'cosmos', icon: '✦', label: 'COSMOS', color: 'var(--ember)',  desc: 'Explore space & science' },
 ]
 
 function getWelcomeMessage() {
@@ -30,14 +30,26 @@ function getWelcomeMessage() {
 
 export default function HomePanel() {
   const setActivePanel = useAppStore((s) => s.setActivePanel)
-  const [stats,   setStats]   = useState(null)
-  const [insight, setInsight] = useState('')
+  const [stats,   setStats]    = useState({ total_messages: 0, total_sessions: 0, vault_items: 0, ai_ready: false, provider: '—' })
+  const [insight, setInsight]  = useState('')
   const [loadingInsight, setLoadingInsight] = useState(false)
+  const [aiStatus, setAiStatus] = useState(null)
+  const [expandedPhase, setExpandedPhase] = useState(null)
 
   const welcome = useMemo(() => getWelcomeMessage(), [])
 
   useEffect(() => {
-    getStats().then(setStats).catch(() => {})
+    // Load stats - handle gracefully if backend hasn't set AI keys
+    getStats()
+      .then((data) => setStats(data))
+      .catch(() => {})
+
+    // Load health to check AI status
+    healthCheck()
+      .then((data) => setAiStatus(data.ai || null))
+      .catch(() => {})
+
+    // Try to fetch initial insight (will fail gracefully if no AI key)
     fetchInsight()
   }, [])
 
@@ -46,8 +58,12 @@ export default function HomePanel() {
     try {
       const data = await getInsight()
       setInsight(data.insight)
-    } catch (_) {}
-    finally { setLoadingInsight(false) }
+    } catch (e) {
+      // If AI isn't configured, show a meaningful fallback
+      setInsight('Configure your AI keys in Railway to unlock TRUMAN\'s live insights.')
+    } finally {
+      setLoadingInsight(false)
+    }
   }
 
   return (
@@ -57,6 +73,28 @@ export default function HomePanel() {
         <div className="home-subtitle">ARTIFICIAL REASONING ARCHITECTURE</div>
         <div className="home-welcome">{welcome}</div>
 
+        {/* AI Status Indicator */}
+        {aiStatus && (
+          <div className="ai-status-row">
+            <span
+              className="ai-status-dot"
+              style={{
+                background: aiStatus.ready ? 'var(--green)' : 'var(--gold)',
+                boxShadow: aiStatus.ready
+                  ? '0 0 8px var(--green-glow)'
+                  : '0 0 8px var(--gold-glow)',
+              }}
+            />
+            <span className="ai-status-text">
+              {aiStatus.ready
+                ? `AI: ${aiStatus.provider.toUpperCase()}${aiStatus.failover ? ' + FAILOVER' : ''}`
+                : 'AI: NO KEY SET'
+              }
+            </span>
+          </div>
+        )}
+
+        {/* Live Insight */}
         <div className="insight-box">
           {loadingInsight ? (
             <div className="insight-loading">
@@ -71,21 +109,20 @@ export default function HomePanel() {
         </div>
       </div>
 
-      {stats && (
-        <div className="home-stats">
-          {[
-            { label: 'MESSAGES', value: stats.total_messages },
-            { label: 'SESSIONS', value: stats.total_sessions },
-            { label: 'VAULT',    value: stats.vault_items    },
-            { label: 'PHASE',    value: 4                    },
-          ].map((s) => (
-            <div key={s.label} className="stat-card">
-              <div className="stat-number">{s.value}</div>
-              <div className="stat-label">{s.label}</div>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* Stats Grid */}
+      <div className="home-stats">
+        {[
+          { label: 'MESSAGES',  value: stats.total_messages, color: 'var(--cyan)'   },
+          { label: 'SESSIONS',  value: stats.total_sessions, color: 'var(--plasma)' },
+          { label: 'VAULT',     value: stats.vault_items,    color: 'var(--gold)'   },
+          { label: 'PHASE',     value: 4,                    color: 'var(--green)'  },
+        ].map((s) => (
+          <div key={s.label} className="stat-card">
+            <div className="stat-number" style={{ color: s.color }}>{s.value}</div>
+            <div className="stat-label">{s.label}</div>
+          </div>
+        ))}
+      </div>
 
       <div className="section-label">BUILD PROGRESS</div>
       <div className="phase-grid">
@@ -93,9 +130,11 @@ export default function HomePanel() {
           <div
             key={p.number}
             className={`phase-card${p.status === 'active' ? ' phase-card--active' : ''}`}
-            style={{ animationDelay: `${i * 0.06}s` }}
+            style={{ animationDelay: `${i * 0.06}s`, cursor: 'pointer' }}
+            onClick={() => setExpandedPhase(expandedPhase === p.number ? null : p.number)}
           >
             <div className="phase-num" style={{ color: p.color }}>
+              <span style={{ marginRight: '6px' }}>{p.icon}</span>
               PHASE {p.number}
             </div>
             <div className="phase-title">{p.title}</div>
@@ -106,6 +145,9 @@ export default function HomePanel() {
                 style={{ width: `${p.completion}%`, background: p.color }}
               />
             </div>
+            {expandedPhase === p.number && (
+              <div className="phase-desc fade-in">{p.desc}</div>
+            )}
           </div>
         ))}
       </div>
@@ -120,6 +162,7 @@ export default function HomePanel() {
           >
             <span className="quick-icon" style={{ color: q.color }}>{q.icon}</span>
             <span className="quick-label" style={{ color: q.color }}>{q.label}</span>
+            <span className="quick-desc">{q.desc}</span>
           </button>
         ))}
       </div>

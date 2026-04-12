@@ -4,6 +4,20 @@
 const BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
 console.log("🛠️ AN·RA API Initialized. BASE URL:", BASE)
 
+/**
+ * Extract a human-readable error message from the backend response.
+ * The FastAPI backend returns { "detail": "..." } on errors.
+ */
+const extractError = async (res) => {
+  try {
+    const body = await res.json()
+    if (body.detail) return body.detail
+    return `Server error: ${res.status}`
+  } catch {
+    return `Request failed: ${res.status}`
+  }
+}
+
 const post = async (url, body) => {
   try {
     const res = await fetch(`${BASE}${url}`, {
@@ -11,7 +25,10 @@ const post = async (url, body) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    if (!res.ok) {
+      const msg = await extractError(res)
+      throw new Error(msg)
+    }
     return res.json()
   } catch (error) {
     console.error(`🚨 API POST Error [${url}]:`, error)
@@ -22,7 +39,10 @@ const post = async (url, body) => {
 const get = async (url) => {
   try {
     const res = await fetch(`${BASE}${url}`)
-    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    if (!res.ok) {
+      const msg = await extractError(res)
+      throw new Error(msg)
+    }
     return res.json()
   } catch (error) {
     console.error(`🚨 API GET Error [${url}]:`, error)
@@ -33,7 +53,10 @@ const get = async (url) => {
 const del = async (url) => {
   try {
     const res = await fetch(`${BASE}${url}`, { method: 'DELETE' })
-    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    if (!res.ok) {
+      const msg = await extractError(res)
+      throw new Error(msg)
+    }
     return res.json()
   } catch (error) {
     console.error(`🚨 API DELETE Error [${url}]:`, error)
@@ -43,6 +66,7 @@ const del = async (url) => {
 
 // HEALTH
 export const healthCheck = () => get('/health')
+export const apiStatus   = () => get('/api/status')
 
 // CHAT
 export const newSession    = () => get('/chat/new')

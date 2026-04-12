@@ -1,109 +1,154 @@
-# 𝐀𝐍·𝐑𝐀 𝐖𝐎𝐑𝐊𝐒𝐏𝐀𝐂𝐄 // 𝐏𝐇𝐀𝐒𝐄 𝐈𝐕
-> *"We do not build software to execute tasks. We build synthetic environments to expand human cognition."*
+# AN·RA — Artificial Reasoning Architecture
+
+> *"Not a chatbot. Not an assistant. A reasoning system designed to think deeply, build real things, and push beyond the surface of every problem."*
 
 ---
 
-**AN·RA** is a hyper-optimized, master-class operating environment built to host **TRUMAN**, a deterministic reasoning entity. 
+## The Soul
 
-This is not a chat wrapper. It is a strictly controlled cyber-physical laboratory blending systems engineering, dynamic code generation, multi-stage philosophical deconstruction, and an immutable knowledge graph directly into a fluid, sub-millisecond graphical interface.
+**AN·RA** is the workspace of **TRUMAN** — an artificial mind built by Ankit.
 
----
+TRUMAN doesn't answer questions like a search engine. It thinks in systems. It breaks problems to first principles. It generates code that runs. It projects futures grounded in measurable trends. It says when something is wrong.
 
-## ✦ ARCHITECTURAL TELEMETRY
+Every panel in this workspace exists because thinking requires different modes. You don't chat the same way you analyze. You don't analyze the same way you build. AN·RA gives each mode its own space, its own tools, its own rhythm — then connects them all through a shared intelligence.
 
-Following the "God-Mode" protocol cleanup, over 22,000 lines of chaotic machine-generated boilerplate, ghost libraries, and unlinked databases have been thoroughly eradicated. The entire cognitive framework has been condensed and rewritten into a pristine monolith.
-
-* **Total Project Scope:** Exactly **5,117 Lines of Code (LOC)**
-* **Execution Latency:** Sub-millisecond (React 18 / Vite SPA)
-* **System Language:** Python 3.10 (Backend) & JavaScript ES6 (Frontend)
-* **Persistence Layer:** Integrated SQLAlchemy parsing SQLite via absolute pathings (Dev) or PostgreSQL (Prod)
-* **AI Compute Cluster:** Adaptive API load balancing (Anthropic, DeepSeek, Google) through OpenRouter
+The interface breathes. The status dot pulses. The ambient background drifts. These aren't decorations — they're signals that the system is alive, listening, ready. When TRUMAN is thinking, you see waves. When it finishes, the response fades in. Nothing is instant. Nothing is dead.
 
 ---
 
-## ✦ THE SIX COGNITIVE CHAMBERS
+## Architecture
 
-To prevent TRUMAN from devolving into generic conversation, the interface forces the AI through six rigidly defined contextual chambers.
-
-| Subsystem | Neural Constraint | Core Purpose |
-|:---:|:---|:---|
-| `HOME` | **Diagnostic Vector** | Parses temporal data to dynamically greet the user, pulling unprompted insights and surfacing total vault mass density across the local database. |
-| `MIND` | **Conversational Stream** | Unconstrained dialogue. Incorporates dynamic wave-state logic while processing nested Markdown and 12-language syntax highlighting in real-time. |
-| `BUILD`| **Structural Foundry** | Disables conversational variance. Forces TRUMAN into programming constraints across native stacks (FastAPI, React, Rust). Code output is mathematically deterministic. |
-| `LAB` | **Ideation Chamber** | The laboratory layer. Analyzes structural abstractions into first principles, stress-tests frameworks, and extrapolates technology 25 years into the future. |
-| `COSMOS`| **Absolute Graph** | A hardcoded layer of Astrophysics, Thermodynamics, and LLM methodologies. TRUMAN serves strictly as an exploratory docent through verified factual data. |
-| `VAULT` | **Immutable Memory** | The external cortex. Persistent storage array where profound concepts and structural code are cataloged, searched, and recalled instantly. |
-
----
-
-## ✦ SPLIT-DEPLOYMENT TOPOLOGY
-
-To maintain physical separation between the UI render cycles and the heavy synthetic processing cluster, the repository forces a strict edge-to-core architecture.
-
-```mermaid
-flowchart TD
-    %% Define Edge Domain
-    subgraph EDGE ["🌍 VERCEL CDN (Static Matrix)"]
-        UI["AN·RA UI ENGINE\n(React/Vite/Zustand)"]
-        CSS["KINETIC CSS VARS\n(Sub-ms Render)"]
-    end
-
-    %% Define Compute Domain
-    subgraph CORE ["⚙️ RAILWAY.APP COMPUTE CORE (Python)"]
-        API["TRUMAN API NODE\n(FastAPI/Uvicorn)"]
-        DB[("STATE GRAPH\n(PostgreSQL ORM)")]
-        LLM{{"LLM REASONING\n(Claude / DeepSeek)"}}
-    end
-
-    %% Human Input
-    HUMAN(("HUMAN\nOPERATOR")) --> |DOM Interaction| UI
-    UI --- CSS
-    
-    %% Bridge Interaction
-    UI <==> |Secure WebSockets / HTTPS| API
-    API <==> |SQLAlchemy ACID| DB
-    API <==> |Low-Latency Context Array| LLM
-
-    %% Aesthetics
-    style EDGE fill:#020308,stroke:#00e5ff,stroke-width:2px,color:#fff
-    style CORE fill:#020308,stroke:#ffc93c,stroke-width:2px,color:#fff
-    style DB fill:#00ff9f,color:#000
-    style LLM fill:#b040ff,color:#fff
-    style HUMAN fill:#fff,color:#000
+```
+┌──────────────────────────────────────────────────┐
+│                   VERCEL (Frontend)               │
+│  React + Vite + Zustand                          │
+│  Panels: HOME · MIND · BUILD · LAB · COSMOS · VAULT │
+│                                                    │
+│  ←──── VITE_API_URL ────→                         │
+└────────────────────┬─────────────────────────────┘
+                     │ HTTPS
+┌────────────────────┴─────────────────────────────┐
+│                  RAILWAY (Backend)                 │
+│  FastAPI + SQLAlchemy + Docker                    │
+│                                                    │
+│  AI Engine:                                       │
+│   ┌─────────────┐     ┌──────────────┐           │
+│   │  DeepSeek    │ ──→ │  OpenRouter   │           │
+│   │  (THE BOSS)  │     │  (FALLBACK)   │           │
+│   └─────────────┘     └──────────────┘           │
+│   Auto-failover: if one key fails,                │
+│   the system switches to the other instantly.     │
+│                                                    │
+│  Database: SQLite (local) / PostgreSQL (prod)     │
+└──────────────────────────────────────────────────┘
 ```
 
 ---
 
-## ✦ LIVE IGNITION PROTOCOL
+## Panels
 
-If you wish to execute the core architecture locally, adhere strictly to this dual-server boot sequence.
+| Panel | Purpose | What it does |
+|-------|---------|-------------|
+| **HOME** | Command center | Live stats, AI status, build progress, proactive insights |
+| **MIND** | Deep conversation | Persistent chat with TRUMAN, model selection, vault integration |
+| **BUILD** | Code generation | 6 specialized modes (NumPy, PyTorch, FastAPI, Algo, Explain, General) |
+| **LAB** | Idea analysis | 5 thinking modes (Analyze, Compare, Future, Build, Free) |
+| **COSMOS** | Knowledge explorer | Space, rockets, AI — with curated facts and AI-powered Q&A |
+| **VAULT** | Saved ideas | Search, expand, delete — everything you've saved across panels |
 
-### STAGE 1: CONFIGURE THE COMPUTE CONSTRAINTS
-Navigate to `anra-workspace/backend/` and mirror the `.env.example` file to create a live `.env`. Inject your `OR_KEY` (OpenRouter API Token) and define your `DATABASE_URL`.
+---
+
+## AI Failover System
+
+TRUMAN uses a **dual-provider architecture** with automatic failover:
+
+- **DeepSeek** is the **boss** — tried first on every request
+- **OpenRouter** is the **fallback fleet** — catches anything DeepSeek drops
+- If one key fails (rate limit, expired, out of credits), the system **instantly** switches to the other
+- Both keys can coexist — set both for maximum reliability
+
+### Railway Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `OR_KEY` | One of these | OpenRouter API key ([openrouter.ai](https://openrouter.ai)) |
+| `DEEPSEEK_API_KEY` | One of these | DeepSeek API key ([platform.deepseek.com](https://platform.deepseek.com)) |
+| `AI_PROVIDER` | No | `openrouter` (default) or `deepseek` — sets the primary |
+| `DEFAULT_MODEL` | No | Default model slug (default: `anthropic/claude-3.5-haiku`) |
+| `DATABASE_URL` | No | Database URI (default: SQLite) |
+
+### Vercel Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `VITE_API_URL` | **Yes** | Full Railway backend URL with `https://` prefix |
+
+---
+
+## Deploy
+
+### Backend (Railway)
+
+1. Connect GitHub repo to Railway
+2. Railway auto-detects the `Dockerfile` and builds
+3. Add `OR_KEY` and/or `DEEPSEEK_API_KEY` in Variables
+4. The backend deploys at `https://your-service.up.railway.app`
+
+### Frontend (Vercel)
+
+1. Connect GitHub repo to Vercel
+2. Set `VITE_API_URL` = `https://your-service.up.railway.app`
+3. Vercel auto-detects the Vite project in `/frontend`
+4. The frontend deploys at `https://your-project.vercel.app`
+
+---
+
+## Local Development
 
 ```bash
-cd anra-workspace/backend
+# Backend
+cd backend
 pip install -r requirements.txt
 uvicorn app:app --reload --port 8000
+
+# Frontend (separate terminal)
+cd frontend
+pnpm install
+pnpm dev
 ```
-*(System verification complete upon viewing: `TRUMAN Workspace — All systems online`)*
-
-### STAGE 2: COMPILE THE EDGE UI
-Initialize the kinetic framework on a synchronized terminal loop.
-
-```bash
-cd anra-workspace/frontend
-npm install
-npm run dev
-```
-
-*(The UI Matrix will automatically bootstrap and connect to the API on port 8000. Open `http://localhost:5173` to initiate the session)*
 
 ---
 
-## ✦ DEVELOPMENT INTEGRITY
-* This repository actively prohibits bloated monolithic UI libraries in favor of native CSS Glassmorphism targeting perfect web vitals.
-* Deprecated variables and unused frameworks have been aggressively wiped. 
-* Total implementation of the "God-Mode" Phase IV re-engineering constraint was executed autonomously in **30 minutes**, eradicating a projected 5+ hour human pipeline.
+## Build Phases
 
-> *"Enter the architecture. Speak with TRUMAN. Start building."*
+| Phase | Name | Status |
+|-------|------|--------|
+| 1 | Foundation | ✅ Complete |
+| 2 | Language Interface | ✅ Complete |
+| 3 | Memory Systems | ✅ Complete |
+| 4 | Workspace | 🔵 Active (75%) |
+| 5 | Ouroboros | ⬜ Planned |
+| 6 | Symbolic Bridge | ⬜ Planned |
+
+---
+
+## Tech Stack
+
+- **Frontend:** React 18, Vite, Zustand, vanilla CSS (glassmorphism design system)
+- **Backend:** Python 3.11, FastAPI, SQLAlchemy, httpx
+- **AI:** DeepSeek + OpenRouter (dual-provider with auto-failover)
+- **Deploy:** Vercel (frontend) + Railway (backend via Docker)
+- **Fonts:** Cinzel (display), JetBrains Mono (technical), Inter (body)
+
+---
+
+## The Name
+
+**AN·RA** — Artificial Reasoning Architecture.  
+**TRUMAN** — the mind that lives inside it.
+
+Built by **Ankit**. Not a product. A project. A system that thinks.
+
+---
+
+*Phase 4 active. The workspace is alive.*

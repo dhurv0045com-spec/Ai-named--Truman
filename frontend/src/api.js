@@ -2,27 +2,43 @@
 // Never call fetch() from any component directly.
 
 const BASE = (import.meta.env.VITE_API_URL || 'http://localhost:8000').replace(/\/$/, '')
+console.log("🛠️ AN·RA API Initialized. BASE URL:", BASE)
 
 const post = async (url, body) => {
-  const res = await fetch(`${BASE}${url}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body),
-  })
-  if (!res.ok) throw new Error(`Failed: ${res.status}`)
-  return res.json()
+  try {
+    const res = await fetch(`${BASE}${url}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    return res.json()
+  } catch (error) {
+    console.error(`🚨 API POST Error [${url}]:`, error)
+    throw error
+  }
 }
 
 const get = async (url) => {
-  const res = await fetch(`${BASE}${url}`)
-  if (!res.ok) throw new Error(`Failed: ${res.status}`)
-  return res.json()
+  try {
+    const res = await fetch(`${BASE}${url}`)
+    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    return res.json()
+  } catch (error) {
+    console.error(`🚨 API GET Error [${url}]:`, error)
+    throw error
+  }
 }
 
 const del = async (url) => {
-  const res = await fetch(`${BASE}${url}`, { method: 'DELETE' })
-  if (!res.ok) throw new Error(`Failed: ${res.status}`)
-  return res.json()
+  try {
+    const res = await fetch(`${BASE}${url}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error(`Failed: ${res.status}`)
+    return res.json()
+  } catch (error) {
+    console.error(`🚨 API DELETE Error [${url}]:`, error)
+    throw error
+  }
 }
 
 // HEALTH
